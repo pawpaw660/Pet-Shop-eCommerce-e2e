@@ -1,4 +1,4 @@
-import {adminLogin} from "../support/adminloginutil";
+import {adminLogin} from "../support/adminlogin";
 describe("admin quser login",()=>{
   it("correct user name and password",()=>{
     adminLogin("admin@buckhill.co.uk","admin")
