@@ -9,14 +9,14 @@ describe("displayed images verification",()=>{
      .scrollIntoView({duration: 2000})
      //adding an intercept to be used to confirm if the correct product image will be displayed
      cy.intercept({
-      path: "/api/v1/product/118f6505-d3b4-35ae-9031-071d732e546c"
+      path: "/api/v1/product/f96c9b6c-3e10-3187-8f49-0dd136e3fe87"
     }).as("verifyDisplayedImage");
      // scroll to view product image them clicking on it
      cy.get('.v-slide-group__content > div:nth-of-type(1) > .v-img.v-responsive > img')
      .scrollIntoView() . click();
      // intercepting response to assert that the correct image is displayed
      cy.wait("@verifyDisplayedImage").then(intercept =>{
-      expect(intercept.response.body.data.metadata.image).to.equal("0c6999ed-4b46-3f0f-ba7d-005383959323");
+      expect(intercept.response.body.data.metadata.image).to.equal("d21bcce8-8527-395b-9551-fa402d6b727c");
    })
   
    
@@ -24,9 +24,9 @@ describe("displayed images verification",()=>{
      //Click add to cart
     cy.get('button.v-btn.v-btn--elevated.v-theme--PetGreen.bg-primary.v-btn--density-default.v-btn--size-default.v-btn--variant-elevated.text-white[data-v-4e0ece86]')
     .click();
-  
+    cy.scrollTo("top")
     
-    cy.get('img.v-img__img.v-img__img--contain[src="https://pet-shop.buckhill.com.hr/api/v1/file/0c6999ed-4b46-3f0f-ba7d-005383959323"]').scrollIntoView();
+    cy.get('.product img').scrollIntoView();
     cy.get('[color] .v-btn--variant-outlined:nth-of-type(1) .v-btn__content').click()
  
    
@@ -34,8 +34,14 @@ describe("displayed images verification",()=>{
     
     cy.get('.mt-6.primary500.text-white.v-btn.v-btn--density-default.v-btn--elevated.v-btn--size-default.v-btn--variant-elevated.v-theme--PetGreen.w-100')
     .click()
+    
+
     cy.get('div:nth-of-type(3) > .ml-2.step__text').click()
     cy.get('.mt-10.order-summary > .align-center.d-flex.grey50.justify-space-between.px-4 > .text-h6').scrollIntoView();
+    //Checking if the image displayed has the same source as the image clicked on
+    cy.get('.review-order.v-window-item img') 
+  .should('have.attr', 'src', 'https://pet-shop.buckhill.com.hr/api/v1/file/d21bcce8-8527-395b-9551-fa402d6b727c');
+
     
     })
   })
